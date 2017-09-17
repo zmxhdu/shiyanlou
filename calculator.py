@@ -2,6 +2,10 @@ import sys
 
 infos = sys.argv
 
+if len(infos) != 7:
+    print("Parameter Error")
+    exit()
+
 infospath = '/home/shiyanlou'
 for i in range(0, len(infos)):
     if infos[i] == '-c':
