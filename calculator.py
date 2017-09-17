@@ -5,11 +5,23 @@ infos = sys.argv
 infospath = '/home/shiyanlou'
 for i in range(0, len(infos)):
     if infos[i] == '-c':
-        config_filename = infospath + '/' + infos[i + 1]
+        if infos[i + 1] != 'test.cfg':
+            print("Parameter Error")
+            exit()
+        else:
+            config_filename = infospath + '/' + infos[i + 1]
     elif infos[i] == '-d':
-        user_filename = infospath + '/' + infos[i + 1]
+        if infos[i + 1] != 'user.csv':
+            print("Parameter Error")
+            exit()
+        else:
+            user_filename = infospath + '/' + infos[i + 1]
     elif infos[i] == '-o':
-        result_filename = infospath + '/' + infos[i + 1]
+        if infos[i + 1] != 'gongzi.csv':
+            print("Parameter Error")
+            exit()
+        else:
+            result_filename = infospath + '/' + infos[i + 1]
 
 
 class Config(object):
@@ -21,19 +33,19 @@ class Config(object):
         configdir = {}
         if (self._config_filename is "") or (self._config_name is ""):
             print("Parameter Error")
-            exit()
+            return "Parameter Error"
         try:
             with open(self._config_filename) as config_file:
                 for line in config_file:
                     configs = line.split("=", )
                     if len(configs) != 2:
                         print("Parameter Error")
-                        continue
+                        exit()
                     config_name = configs[0].strip()
                     config_value = configs[1].strip()
                     if (config_name is "") or (config_value is ""):
                         print("Parameter Error")
-                        continue
+                        exit()
                     configdir[config_name] = config_value
             return float(configdir[self._config_name])
         except FileNotFoundError:
@@ -62,19 +74,19 @@ class UserData(object):
         userdir = {}
         if (self._user_filename is ""):
             print("Parameter Error")
-            return "Parameter Error"
+            exit()
         try:
             with open(self._user_filename) as user_file:
                 for lines in user_file:
                     users = lines.split(",", )
                     if len(users) != 2:
                         print("Parameter Error")
-                        continue
+                        exit()
                     user_num = users[0].strip()
                     user_salary = users[1].strip()
                     if (user_num is "") or (user_salary is ""):
                         print("Parameter Error")
-                        continue
+                        exit()
                     userdir[user_num] = user_salary
                     user_salary = int(user_salary)
 
