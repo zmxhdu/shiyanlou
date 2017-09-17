@@ -21,7 +21,7 @@ class Config(object):
         configdir = {}
         if (self._config_filename is "") or (self._config_name is ""):
             print("Parameter Error")
-            return "Parameter Error"
+            exit()
         try:
             with open(self._config_filename) as config_file:
                 for line in config_file:
