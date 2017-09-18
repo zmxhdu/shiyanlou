@@ -1,4 +1,5 @@
 import sys
+import os
 
 infos = sys.argv
 
@@ -6,24 +7,22 @@ if len(infos) != 7:
     print("Parameter Error")
     exit()
 
-infospath = '/home/shiyanlou'
+infospath = os.getcwd()
 for i in range(0, len(infos)):
     if infos[i] == '-c':
-        if infos[i + 1] != 'test.cfg':
-            print("Parameter Error")
-            exit()
+        if '/' in infos[i + 1] :
+            config_filename =  infos[i + 1]
         else:
             config_filename = infospath + '/' + infos[i + 1]
+        print(config_filename)
     elif infos[i] == '-d':
-        if infos[i + 1] != 'user.csv':
-            print("Parameter Error")
-            exit()
+        if '/' in infos[i + 1] :
+            user_filename =  infos[i + 1]
         else:
             user_filename = infospath + '/' + infos[i + 1]
     elif infos[i] == '-o':
-        if infos[i + 1] != 'gongzi.csv':
-            print("Parameter Error")
-            exit()
+        if '/' in infos[i + 1] :
+            result_filename =  infos[i + 1]
         else:
             result_filename = infospath + '/' + infos[i + 1]
 
