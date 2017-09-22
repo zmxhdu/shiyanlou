@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1> {{files.title}} </h1>
+{% endblock %}
+
+{% block time %}
+    {{files.created_time}}
+{% endblock %}
+
+{% block content %}
+    {{files.content}}
+{% endblock %}
