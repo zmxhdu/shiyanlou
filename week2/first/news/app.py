@@ -1,8 +1,11 @@
 from flask import Flask,render_template
 import json,os
+from flask_sqlalchemy import SQLAlchemy
 
 app=Flask(__name__)
 app.config['TEMPLATE_AUTO_RELOAD']=True
+app.config['SQLALCHMNY_DATABASE_URI']='mysql://root@localhost/shiyanlou'
+db=SQLAlchemy(app)
 
 jsonpath='/home/shiyanlou/files'
 jsonfilenames=os.listdir(jsonpath)
@@ -41,7 +44,7 @@ def file(filename):
             'time':created_time,
             'content':content
         }
-        return render_template('file.html',files=files)
+        return render_template('file.html', files=files)
     else:
         return not_found(404)
 
