@@ -1,0 +1,18 @@
+<body>
+    <div>
+    	{% block header %}
+        {% endblock %}
+    </div>
+    <div>
+    	{% block content %}
+    	{% endblock %}
+    </div>
+    <div>
+    	{% block creatd_time %}
+    	{% endblock %}
+    </div>
+    <div>
+        {% block name %}
+        {% endblock %}
+    </div>
+</body>

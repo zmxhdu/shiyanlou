@@ -10,19 +10,19 @@ if len(infos) != 7:
 infospath = os.getcwd()
 for i in range(0, len(infos)):
     if infos[i] == '-c':
-        if '/' in infos[i + 1] :
-            config_filename =  infos[i + 1]
+        if '/' in infos[i + 1]:
+            config_filename = infos[i + 1]
         else:
             config_filename = infospath + '/' + infos[i + 1]
         print(config_filename)
     elif infos[i] == '-d':
-        if '/' in infos[i + 1] :
-            user_filename =  infos[i + 1]
+        if '/' in infos[i + 1]:
+            user_filename = infos[i + 1]
         else:
             user_filename = infospath + '/' + infos[i + 1]
     elif infos[i] == '-o':
-        if '/' in infos[i + 1] :
-            result_filename =  infos[i + 1]
+        if '/' in infos[i + 1]:
+            result_filename = infos[i + 1]
         else:
             result_filename = infospath + '/' + infos[i + 1]
 

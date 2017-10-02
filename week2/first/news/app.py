@@ -1,10 +1,11 @@
 from flask import Flask, render_template
-import json, os
+import json
+import os
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['TEMPLATE_AUTO_RELOAD'] = True
-app.config['SQLALCHMNY_DATABASE_URI'] = 'mysql://root@localhost/shiyanlou'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/shiyanlou'
 db = SQLAlchemy(app)
 
 jsonpath = '/home/shiyanlou/files'
@@ -55,4 +56,4 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(host = '127.0.0.1', port = 3000, debug = True)
+    app.run(host='127.0.0.1', port=3000, debug=True)

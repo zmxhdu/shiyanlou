@@ -1,19 +1,19 @@
-from flask import Flask,render_template,request,make_response
+import json
+import os
 
-app = Flask(__name__)
+jsonpath = 'E:\\git\\shiyanlou\\week2\\first\\files'
+jsonfilenames = os.listdir(jsonpath)
 
 
-@app.route('/')
-def index():
-    username=request.cookies.get('username')
-    return 'Hello,{}'.format(username)
+def jsonfile(jsonfilename):
+    with open(os.path.join(jsonpath, jsonfilename), 'r') as jsonfile:
+        jsonfilecontent = json.loads(jsonfile.read())
+        print(jsonfilecontent)
+    return jsonfilecontent
 
-@app.route('/user/<username>')
-def user_index(username):
-    resp=make_response(render_template('user_index.html',username=username))
-    resp.set_cookie('username',username)
-
-    return resp
-
-if __name__=='__main__':
-    app.run()
+if __name__ == '__main__':
+    titles = []
+    for jsonfilename in jsonfilenames:
+        title = jsonfile(jsonfilename)['title']
+        titles.append(title)
+    print(titles)

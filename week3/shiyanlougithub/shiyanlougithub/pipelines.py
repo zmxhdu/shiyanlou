@@ -17,8 +17,6 @@ class ShiyanlougithubPipeline(object):
         Session = sessionmaker(bind=engine)
         self.session = Session()
 
-
     def close_spider(self, spider):
         self.session.commit()
         self.session.close()
-
