@@ -1,0 +1,27 @@
+<!DOTYPE html>
+<html>
+<head>
+<link href="{{ url_for('static', filename="bootstrap-3.3.7-dist/css/bootstrap.min.css") }}" rel="stylesheet">
+<script src="{{ url_for('static',filename="bootstrap-3.3.7-dist/js/jquery.min.js") }}"></script>
+<script src="{{ url_for('static',filename="bootstrap-3.3.7-dist/js/bootstrap.min.js") }}"></script>
+</head>
+<ul class="nav nav-tabs">
+<h1 role="presentation" class="activate"><a href="http://127.0.0.1:3000">Home </a></h1>
+</ul>
+
+<body class="list-group">
+<div class="list-group-item active">
+{%  for file in files %}
+<a href="http://127.0.0.1:3000/files/{{file.id}}" class="list-group-item"> 
+    <h4><span>{{file.title}}</span></h4></a>
+    <h5>
+    {% for tag in file.tags %}
+        <span class="label label-warning"> {{tag}} </span>
+    {% endfor %}
+    </h5>
+    <br>
+{% endfor %}
+</div>
+</body>
+</html>
+

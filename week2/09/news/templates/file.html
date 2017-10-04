@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{files.title}} 
+{% endblock %}
+
+{% block name %}
+    {{files.name}}
+{% endblock %}
+
+{% block time %}
+    {{files.created_time}}
+{% endblock %}
+
+{% block content %}
+    {{files.content}}
+{% endblock %}
