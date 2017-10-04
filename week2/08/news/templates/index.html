@@ -1,0 +1,10 @@
+<h1>welcome </h1>
+
+{%  for file in files %}
+<a href="http://127.0.0.1:3000/files/{{file.id}}"><span>{{file.title}}</span></a>
+    {% for tag in file.tags %}
+        <span> {{tag}} </span>
+    {% endfor %}
+    <br>
+{% endfor %}
+

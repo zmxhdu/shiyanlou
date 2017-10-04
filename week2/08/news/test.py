@@ -1,11 +1,15 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config['TEMPLATE_AUTO_RELOAD'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/shiyanlou'
 db = SQLAlchemy(app)
+
+client = MongoClient('127.0.0.1', 27017)
+mongo_db = client.shiyanlou
 
 
 class Category(db.Model):
@@ -15,7 +19,7 @@ class Category(db.Model):
     name = db.Column(db.String(80))
     files = db.relationship('File')
 
-    def __init__(self, name):
+    def __init__(self,name):
         self.name = name
 
 
@@ -29,16 +33,16 @@ class File(db.Model):
     category = db.relationship('Category')
     content = db.Column(db.Text)
 
-    def __init__(self, title, created_time, category, content):
+    def __init__(self,title,created_time,category,content):
         self.title = title
         self.created_time = created_time
         self.category = category
         self.content = content
 
 
-def _init():
-    db.create_all()
 
+def db_creat():
+    db.create_all()
 
 def insert_datas():
     java = Category('Java')
@@ -50,6 +54,12 @@ def insert_datas():
     db.session.add(file1)
     db.session.add(file2)
     db.session.commit()
+
+    file1.add_tag('tech')
+    file1.add_tag('java')
+    file1.add_tag('linux')
+    file2.add_tag('tech')
+    file2.add_tag('python')
 
 
 @app.route('/')
@@ -86,5 +96,7 @@ def not_found(error):
 
 
 if __name__ == '__main__': 
-    
+    db.create_all()
+    insert_datas()
     app.run(host='127.0.0.1', port=3000, debug=True)
+

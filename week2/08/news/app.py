@@ -1,11 +1,15 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.config['TEMPLATE_AUTO_RELOAD'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/shiyanlou'
 db = SQLAlchemy(app)
+
+client = MongoClient('127.0.0.1', 27017)
+mongo_db = client.shiyanlou
 
 
 class Category(db.Model):
@@ -35,12 +39,41 @@ class File(db.Model):
         self.category = category
         self.content = content
 
+    def add_tag(self, tag_name):
+        file_mongo = mongo_db.file.find_one({'file_id': self.id})
+        if file_mongo:
+            tag_names = file_mongo['tag_names']
+            if tag_name not in tag_names:
+                tag_names.append(tag_name)
+            mongo_db.file.update_one({'file_id': self.id}, {'$set': {'tag_names': tag_names}})
+        else:
+            tag_names = [tag_name]
+            mongo_db.file.insert_one({'file_id': self.id, 'tag_names': tag_names})
+        return tag_names
 
-def _init():
-    db.create_all()
+    def remove_tag(self, tag_name):
+        file_mongo = mongo_db.file.find_one({'file_id': self.id})
+        if file_mongo:
+            tag_names = file_mongo['tag_names']
+            if tag_name in tag_names:
+                tag_names = tag_names.remove(tag_name)
+            else:
+                return tag_names
+            mongo_db.file.update_one({'file_id': self.id}, {'$set': {'tag_names': tag_names}})
+        return []
+
+    @property
+    def tags(self):
+        file_mongo = mongo_db.file.find_one({'file_id': self.id})
+        if file_mongo:
+            return file_mongo['tag_names']
+        else:
+            return []
+
 
 
 def insert_datas():
+    db.create_all()
     java = Category('Java')
     python = Category('Python')
     file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is cool!')
@@ -50,7 +83,14 @@ def insert_datas():
     db.session.add(file1)
     db.session.add(file2)
     db.session.commit()
+    file1.add_tag('tech')
+    file1.add_tag('java')
+    file1.add_tag('linux')
+    file2.add_tag('tech')
+    file2.add_tag('python')
 
+
+insert_datas()
 
 @app.route('/')
 def index():
@@ -85,6 +125,5 @@ def not_found(error):
     return render_template('404.html'), 404
 
 
-if __name__ == '__main__': 
-    
+if __name__ == '__main__':
     app.run(host='127.0.0.1', port=3000, debug=True)
