@@ -21,8 +21,7 @@ class GithubsSpider(scrapy.Spider):
             request.meta['item'] = item
             yield request
 
-
-    def parse_detail(self,response):
+    def parse_detail(self, response):
         item = response.meta['item']
         try:
             item['commits'] = response.xpath('//span[@class="num text-emphasized"]/text()').extract()[0].strip()
@@ -33,4 +32,3 @@ class GithubsSpider(scrapy.Spider):
             item['branches'] = 0
             item['releases'] = 0
         yield item
-
