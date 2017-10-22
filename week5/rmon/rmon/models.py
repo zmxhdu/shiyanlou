@@ -2,10 +2,10 @@
 
 该模块实现了所有的model类以及相应的序列化类
 """
-from flask_sqlalchemy import SQLALchemy
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-db = SQLALCHEMY()
+db = SQLAlchemy()
 
 
 class Server(db.Model):
@@ -29,7 +29,7 @@ class Server(db.Model):
     def save(self):
         """保存到数据库中
         """
-        db.sessiom.add(self)
+        db.session.add(self)
         db.session.commit()
 
     def delete(self):
