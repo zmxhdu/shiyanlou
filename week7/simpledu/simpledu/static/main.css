@@ -1,6 +1,23 @@
-.form{
+.form_css {
     /* 设置 from 的宽度为 400px */
     width: 400px;
     /* 设置 form 居中 */
     margin: 0 auto;
+}
+
+a,
+a:hover,
+a:visited {
+    text-description: none!important;
+}
+
+.course__name,
+.course__description {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-pagination {
+    text-align: center;
 }
