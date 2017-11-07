@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IngtegerField
 from wtforms.validators import Length, Email, EqualTo, Required
 from wtforms import ValidationError
 from simpledu.models import db, User, Course
@@ -45,3 +45,7 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(email=self.email.data).first()
         if user and not user.check_password(field.data):
             raise ValidationError('密码错误')
+
+
+class CourseForm(FlaskForm):
+    name = StringField()
